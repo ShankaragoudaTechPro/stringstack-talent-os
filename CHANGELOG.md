@@ -22,6 +22,16 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## Version 0.2.0 - Sprint 2
+
+### Added
+
+- Designed Role table
+- Designed User table
+- Designed Student table
+- Designed Trainer table
+- Defined relationships between Role, User, Student, and Trainer
+
 ## Upcoming
 
 - Database Architecture
@@ -31,4 +41,5 @@ All notable changes to this project will be documented in this file.
 - JWT Authentication
 - REST APIs
 - React Frontend
-- Deployment
+- Deployment 
+
