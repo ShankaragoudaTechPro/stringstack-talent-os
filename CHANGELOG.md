@@ -53,6 +53,51 @@ All notable changes to this project will be documented in this file.
 - Completed Version 1 database design.
 - Finalized core database architecture.
 
+Role-API.md
+
+POST    /api/v1/roles
+
+GET     /api/v1/roles
+
+GET     /api/v1/roles/{id}
+
+PUT     /api/v1/roles/{id}
+
+DELETE  /api/v1/roles/{id}
+
+Request 
+
+{
+    "roleName": "ADMIN",
+    "description": "System Administrator",
+    "active":true
+}
+
+Response 
+
+{
+    "id": 2,
+    "roleName": "ADMIN",
+    "description": " ",
+    "active": true,
+    "createdAt": "2026-07-01T17:37:48.0504571",
+    "updatedAt": "2026-07-01T17:37:48.0504571"
+}
+
+## Version 0.5.0 - Sprint 3
+
+### Added
+
+- Implemented Role Entity
+- Implemented Role Repository
+- Implemented Role DTOs
+- Implemented Role Mapper
+- Implemented Role Service
+- Implemented Role Controller
+- Completed Role CRUD APIs
+- Tested APIs using Postman
+- Verified data persistence in MySQL
+
 ---
 
 ## Upcoming
