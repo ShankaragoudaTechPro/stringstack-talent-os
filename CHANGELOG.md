@@ -26,20 +26,43 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Designed Role table
-- Designed User table
-- Designed Student table
-- Designed Trainer table
-- Defined relationships between Role, User, Student, and Trainer
+- Designed Role table.
+- Designed User table.
+- Designed Student table.
+- Designed Trainer table.
+- Defined relationships between Role, User, Student, and Trainer.
+
+---
+
+## Version 0.3.0 - Sprint 2
+
+### Added
+
+- Designed Course table.
+- Designed Batch table.
+- Designed Enrollment table.
+- Designed Attendance table.
+- Designed Company table.
+- Designed Placement Drive table.
+- Designed Placement table.
+- Designed Resume table.
+- Designed Notification table.
+
+### Completed
+
+- Completed Version 1 database design.
+- Finalized core database architecture.
+
+---
 
 ## Upcoming
 
-- Database Architecture
 - ER Diagram
-- Table Design
+- SQL Schema
 - Spring Boot Project Setup
-- JWT Authentication
+- Authentication (JWT)
+- Role-Based Authorization
 - REST APIs
 - React Frontend
-- Deployment 
-
+- Testing
+- Deployment
