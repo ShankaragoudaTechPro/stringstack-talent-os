@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: stringstack-talent-os-api
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/stringstack_talent_os
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
