@@ -84,6 +84,18 @@ Response
     "updatedAt": "2026-07-01T17:37:48.0504571"
 }
 
+
+## Version 0.4.0 - Sprint 4
+
+### Added
+
+- Completed User Module
+- Implemented CRUD APIs
+- Added Role ↔ User relationship
+- Password encryption using BCrypt
+- Added User API documentation
+- Tested APIs using Postman
+
 ## Version 0.5.0 - Sprint 3
 
 ### Added
