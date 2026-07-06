@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## Version 0.1.0 - Sprint 1 Day 1 (30 June 2026)
+# Version 0.1.0 - Sprint 1 (30 June 2026)
 
-### Added
+## Added
 
 - Created project folder structure.
 - Added README.md.
@@ -15,14 +15,16 @@ All notable changes to this project will be documented in this file.
 - Added Application Flow documentation.
 - Added Database Design documentation.
 - Added API Design folder.
-- Added UI planning document.
+- Added UI Planning document.
 - Initialized Git repository.
 - Created GitHub repository.
 - Completed first Git commit.
 
 ---
 
-## Version 0.2.0 - Sprint 2
+# Version 0.2.0 - Sprint 2
+
+## Database Design
 
 ### Added
 
@@ -34,7 +36,9 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## Version 0.3.0 - Sprint 2
+# Version 0.3.0 - Sprint 3
+
+## Database Design
 
 ### Added
 
@@ -50,76 +54,172 @@ All notable changes to this project will be documented in this file.
 
 ### Completed
 
-- Completed Version 1 database design.
+- Completed Version 1 Database Design.
 - Finalized core database architecture.
 
-Role-API.md
+---
 
+# Version 0.4.0 - Sprint 4
+
+## Role Module
+
+### Added
+
+- Implemented Role Entity.
+- Implemented Role Repository.
+- Implemented Role DTOs.
+- Implemented Role Mapper.
+- Implemented Role Service.
+- Implemented Role Controller.
+- Implemented Global Exception Handling.
+- Completed Role CRUD APIs.
+- Added Role API Documentation.
+- Tested APIs using Postman.
+- Verified data persistence in MySQL.
+
+### Role APIs
+
+```
 POST    /api/v1/roles
-
 GET     /api/v1/roles
-
 GET     /api/v1/roles/{id}
-
 PUT     /api/v1/roles/{id}
-
 DELETE  /api/v1/roles/{id}
+```
 
-Request 
+### Sample Request
 
+```json
 {
     "roleName": "ADMIN",
     "description": "System Administrator",
-    "active":true
+    "active": true
 }
+```
 
-Response 
+### Sample Response
 
+```json
 {
-    "id": 2,
+    "id": 1,
     "roleName": "ADMIN",
-    "description": " ",
+    "description": "System Administrator",
     "active": true,
     "createdAt": "2026-07-01T17:37:48.0504571",
     "updatedAt": "2026-07-01T17:37:48.0504571"
 }
-
-
-## Version 0.4.0 - Sprint 4
-
-### Added
-
-- Completed User Module
-- Implemented CRUD APIs
-- Added Role ↔ User relationship
-- Password encryption using BCrypt
-- Added User API documentation
-- Tested APIs using Postman
-
-## Version 0.5.0 - Sprint 3
-
-### Added
-
-- Implemented Role Entity
-- Implemented Role Repository
-- Implemented Role DTOs
-- Implemented Role Mapper
-- Implemented Role Service
-- Implemented Role Controller
-- Completed Role CRUD APIs
-- Tested APIs using Postman
-- Verified data persistence in MySQL
+```
 
 ---
 
-## Upcoming
+# Version 0.5.0 - Sprint 5
+
+## User Module
+
+### Added
+
+- Implemented User Entity.
+- Implemented User Repository.
+- Implemented User DTOs.
+- Implemented User Mapper.
+- Implemented User Service.
+- Implemented User Controller.
+- Implemented User CRUD APIs.
+- Established User ↔ Role relationship.
+- Password encryption using BCrypt.
+- Added User API Documentation.
+- Tested APIs using Postman.
+- Verified User persistence in MySQL.
+
+---
+
+# Version 0.6.0 - Sprint 6
+
+## Authentication & Security
+
+### Added
+
+- Configured Spring Security.
+- Added PasswordConfig.
+- Added AuthenticationConfig.
+- Implemented CustomUserDetailsService.
+- Added JwtService.
+- Configured JWT Secret and Expiration.
+- Implemented Login API.
+- Generated real JWT Token.
+- Integrated BCrypt password verification.
+- Added Authentication API Documentation.
+- Tested Login API using Postman.
+- Verified JWT Token generation.
+
+### Authentication API
+
+```
+POST /api/v1/auth/login
+```
+
+### Sample Request
+
+```json
+{
+    "email": "shankar@gmail.com",
+    "password": "Admin@123"
+}
+```
+
+### Sample Response
+
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9...",
+    "tokenType": "Bearer",
+    "userId": 1,
+    "firstName": "Shankar",
+    "lastName": "Pagad",
+    "email": "shankar@gmail.com",
+    "role": "ADMIN"
+}
+```
+
+---
+
+# Upcoming
+
+## Authentication
+
+- JWT Authentication Filter
+- JWT Validation
+- Protected APIs
+- Role-Based Authorization
+- Refresh Token
+
+## Modules
+
+- Student Module
+- Trainer Module
+- Course Module
+- Batch Module
+- Enrollment Module
+- Attendance Module
+- Company Module
+- Placement Module
+- Resume Module
+- Notification Module
+
+## Documentation
 
 - ER Diagram
 - SQL Schema
-- Spring Boot Project Setup
-- Authentication (JWT)
-- Role-Based Authorization
-- REST APIs
-- React Frontend
-- Testing
-- Deployment
+- Swagger / OpenAPI Documentation
+
+## DevOps
+
+- Docker
+- GitHub Actions CI/CD
+- AWS / Render Deployment
+
+## Frontend
+
+- React Application
+- Dashboard
+- Authentication UI
