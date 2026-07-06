@@ -7,6 +7,7 @@ import com.stringstack.talentos.repository.UserRepository;
 import com.stringstack.talentos.security.jwt.JwtService;
 import com.stringstack.talentos.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public LoginResponse login(LoginRequest request) {
@@ -22,7 +24,10 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Invalid Email"));
 
-        // Password verification will be added in the next step
+        // Verify password
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Invalid Password");
+        }
 
         String token = jwtService.generateToken(user.getEmail());
 
