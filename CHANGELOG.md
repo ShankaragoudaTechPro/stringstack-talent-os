@@ -179,9 +179,94 @@ POST /api/v1/auth/login
     "email": "shankar@gmail.com",
     "role": "ADMIN"
 }
-```
+## Version 0.7.0 - Sprint 7
+
+### Added
+
+- Implemented Student Entity
+- Implemented Student Repository
+- Implemented Student DTOs
+- Implemented Student Mapper
+- Implemented Student Service
+- Implemented Student Controller
+- Added Student ↔ User relationship
+- Completed Student CRUD APIs
+- Added Student API documentation
+- Tested Student APIs using Postman 
+
 
 ---
+---
+
+## Version 0.8.0 - Sprint 8
+
+### Added
+
+- Implemented Trainer Entity
+- Implemented Trainer Repository
+- Implemented Trainer DTOs
+- Implemented Trainer Mapper
+- Implemented Trainer Service
+- Implemented Trainer Controller
+- Added Trainer ↔ User relationship
+- Completed Trainer CRUD APIs
+- Protected Trainer APIs using JWT Authentication
+- Added Trainer API Documentation
+- Tested Trainer APIs using Postman
+
+### Completed
+---
+
+## Version 1.0.0 - Sprint 10
+
+### Course Module
+
+#### Added
+
+- Implemented Course Entity
+- Implemented Course Repository
+- Implemented Course DTOs
+- Implemented Course Mapper
+- Implemented Course Service
+- Implemented Course Service Implementation
+- Implemented Course Controller
+- Completed Course CRUD APIs
+- Protected Course APIs using JWT Authentication
+- Added Course API Documentation
+- Tested Course APIs using Postman
+
+#### Completed
+
+- Course CRUD implementation
+- Database persistence verification
+- API validation
+- JWT secured endpoints
+
+
+
+## Version 1.1.0 - Sprint 11
+
+### Batch Module
+
+#### Added
+
+- Implemented Batch Entity
+- Implemented Batch Repository
+- Implemented Batch DTOs
+- Implemented Batch Mapper
+- Implemented Batch Service
+- Implemented Batch Controller
+- Added Batch ↔ Course relationship
+- Added Batch ↔ Trainer relationship
+- Completed Batch CRUD APIs
+- Added Batch API Documentation
+- Tested Batch APIs using Postman
+
+#### Completed
+
+- Batch CRUD implementation
+- Database persistence verification
+- JWT secured endpoints
 
 # Upcoming
 
