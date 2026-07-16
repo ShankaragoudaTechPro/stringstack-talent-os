@@ -396,6 +396,35 @@ POST /api/v1/auth/login
 
 - Placement Drive CRUD implementation
 - Database persistence verification
+- JWT secured endpoints 
+
+
+## Version 1.6.0 - Sprint 16
+
+### Placement Module
+
+#### Added
+
+- Implemented Placement Entity
+- Implemented Placement Repository
+- Implemented Placement DTOs
+- Implemented Placement Mapper
+- Implemented Placement Service
+- Implemented Placement Service Implementation
+- Implemented Placement Controller
+- Added Placement API Documentation
+- Tested Placement CRUD APIs using Postman
+
+#### Relationships
+
+- Enrollment → Placement
+- Placement Drive → Placement
+- Company → Placement
+
+#### Completed
+
+- Placement CRUD implementation
+- Database persistence verification
 - JWT secured endpoints
 
 
