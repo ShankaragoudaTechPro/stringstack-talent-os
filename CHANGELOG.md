@@ -268,6 +268,137 @@ POST /api/v1/auth/login
 - Database persistence verification
 - JWT secured endpoints
 
+---
+
+## Version 1.2.0 - Sprint 12
+
+### Enrollment Module
+
+#### Added
+
+- Implemented Enrollment Entity
+- Implemented Enrollment Repository
+- Implemented Enrollment DTOs
+- Implemented Enrollment Mapper
+- Implemented Enrollment Service
+- Implemented Enrollment Service Implementation
+- Implemented Enrollment Controller
+- Added Student ↔ Enrollment relationship
+- Added Batch ↔ Enrollment relationship
+- Completed Enrollment CRUD APIs
+- Added Enrollment API Documentation
+- Tested Enrollment APIs using Postman
+
+#### Completed
+
+- Enrollment CRUD implementation
+- Database persistence verification
+- JWT secured endpoints
+- Duplicate enrollment validation
+
+---
+
+## Version 1.2.0 - Sprint 12
+
+### Enrollment Module
+
+#### Added
+
+- Implemented Enrollment Entity
+- Implemented Enrollment Repository
+- Implemented Enrollment DTOs
+- Implemented Enrollment Mapper
+- Implemented Enrollment Service
+- Implemented Enrollment Service Implementation
+- Implemented Enrollment Controller
+- Added Student ↔ Enrollment relationship
+- Added Batch ↔ Enrollment relationship
+- Completed Enrollment CRUD APIs
+- Added Enrollment API Documentation
+- Tested Enrollment APIs using Postman
+
+#### Completed
+
+- Enrollment CRUD implementation
+- Database persistence verification
+- JWT secured endpoints
+- Duplicate enrollment validation
+
+## Version 1.3.0 - Sprint 13
+
+### Attendance Module
+
+#### Added
+
+- Implemented Attendance Entity
+- Implemented Attendance Repository
+- Implemented Attendance DTOs
+- Implemented Attendance Mapper
+- Implemented Attendance Service
+- Implemented Attendance Service Implementation
+- Implemented Attendance Controller
+- Added Enrollment ↔ Attendance relationship
+- Completed Attendance CRUD APIs
+- Added Attendance API Documentation
+- Tested Attendance APIs using Postman
+
+#### Completed
+
+- Attendance CRUD implementation
+- Database persistence verification
+- JWT secured endpoints
+
+
+## Version 1.4.0 - Sprint 14
+
+### Company Module
+
+#### Added
+
+- Implemented Company Entity
+- Implemented Company Repository
+- Implemented Company DTOs
+- Implemented Company Mapper
+- Implemented Company Service
+- Implemented Company Service Implementation
+- Implemented Company Controller
+- Completed Company CRUD APIs
+- Added Company API Documentation
+- Tested Company APIs using Postman
+
+#### Completed
+
+- Company CRUD implementation
+- Database persistence verification
+- JWT secured endpoints
+- Duplicate company validation
+
+
+## Version 1.5.0 - Sprint 15
+
+### Placement Drive Module
+
+#### Added
+
+- Implemented Placement Drive Entity
+- Implemented Placement Drive Repository
+- Implemented Placement Drive DTOs
+- Implemented Placement Drive Mapper
+- Implemented Placement Drive Service
+- Implemented Placement Drive Service Implementation
+- Implemented Placement Drive Controller
+- Added Company ↔ Placement Drive relationship
+- Completed Placement Drive CRUD APIs
+- Added Placement Drive API Documentation
+- Tested Placement Drive APIs using Postman
+
+#### Completed
+
+- Placement Drive CRUD implementation
+- Database persistence verification
+- JWT secured endpoints
+
+
 # Upcoming
 
 ## Authentication
