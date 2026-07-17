@@ -425,7 +425,71 @@ POST /api/v1/auth/login
 
 - Placement CRUD implementation
 - Database persistence verification
-- JWT secured endpoints
+- JWT secured endpoints 
+
+# Version 0.13.0
+
+## Resume Module
+
+### Added
+
+- Resume Entity
+- ResumeRequest DTO
+- ResumeResponse DTO
+- Resume Repository
+- Resume Mapper
+- Resume Service
+- Resume Service Implementation
+- Resume Controller
+- Resume CRUD REST APIs
+- Resume API Documentation
+- Resume Postman Testing
+
+### Features
+
+- Create Resume
+- Get All Resumes
+- Get Resume By Id
+- Update Resume
+- Delete Resume
+
+### Testing
+
+- Successfully tested all CRUD APIs using Postman.
+
+### Status
+
+✅ Resume Module Completed
+
+# Version 0.14.0
+
+## Notification Module
+
+### Added
+- Notification Entity
+- NotificationRequest DTO
+- NotificationResponse DTO
+- Notification Repository
+- Notification Mapper
+- Notification Service
+- Notification Service Implementation
+- Notification Controller
+- Notification CRUD REST APIs
+- Notification API Documentation
+- Notification Postman Testing
+
+### Features
+- Create Notification
+- Get All Notifications
+- Get Notification By Id
+- Update Notification
+- Delete Notification
+
+### Testing
+- Successfully tested all CRUD APIs using Postman.
+
+### Status
+✅ Notification Module Completed
 
 
 # Upcoming
