@@ -4,6 +4,8 @@ import com.stringstack.talentos.dto.trainer.TrainerRequest;
 import com.stringstack.talentos.dto.trainer.TrainerResponse;
 import com.stringstack.talentos.entity.Trainer;
 import com.stringstack.talentos.entity.User;
+import com.stringstack.talentos.exception.DuplicateResourceException;
+import com.stringstack.talentos.exception.ResourceNotFoundException;
 import com.stringstack.talentos.mapper.TrainerMapper;
 import com.stringstack.talentos.repository.TrainerRepository;
 import com.stringstack.talentos.repository.UserRepository;
@@ -25,16 +27,16 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerResponse createTrainer(TrainerRequest request) {
 
         if (trainerRepository.existsByTrainerCode(request.getTrainerCode()))
-            throw new RuntimeException("Trainer Code already exists.");
+            throw new DuplicateResourceException("Trainer Code already exists.");
 
         if (trainerRepository.existsByEmail(request.getEmail()))
-            throw new RuntimeException("Email already exists.");
+            throw new DuplicateResourceException("Email already exists.");
 
         if (trainerRepository.existsByPhone(request.getPhone()))
-            throw new RuntimeException("Phone already exists.");
+            throw new DuplicateResourceException("Phone already exists.");
 
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
         Trainer trainer = TrainerMapper.toEntity(request);
 
@@ -58,7 +60,7 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerResponse getTrainerById(Long id) {
 
         Trainer trainer = trainerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Trainer not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Trainer not found."));
 
         return TrainerMapper.toResponse(trainer);
     }
@@ -67,10 +69,10 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerResponse updateTrainer(Long id, TrainerRequest request) {
 
         Trainer trainer = trainerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Trainer not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Trainer not found."));
 
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
         trainer.setTrainerCode(request.getTrainerCode());
         trainer.setFirstName(request.getFirstName());
@@ -92,7 +94,7 @@ public class TrainerServiceImpl implements TrainerService {
     public void deleteTrainer(Long id) {
 
         Trainer trainer = trainerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Trainer not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Trainer not found."));
 
         trainerRepository.delete(trainer);
     }

@@ -3,6 +3,8 @@ package com.stringstack.talentos.service.impl;
 import com.stringstack.talentos.dto.company.CompanyRequest;
 import com.stringstack.talentos.dto.company.CompanyResponse;
 import com.stringstack.talentos.entity.Company;
+import com.stringstack.talentos.exception.DuplicateResourceException;
+import com.stringstack.talentos.exception.ResourceNotFoundException;
 import com.stringstack.talentos.mapper.CompanyMapper;
 import com.stringstack.talentos.repository.CompanyRepository;
 import com.stringstack.talentos.service.CompanyService;
@@ -22,11 +24,11 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyResponse createCompany(CompanyRequest request) {
 
         if (companyRepository.existsByCompanyCode(request.getCompanyCode())) {
-            throw new RuntimeException("Company Code already exists.");
+            throw new DuplicateResourceException("Company Code already exists.");
         }
 
         if (companyRepository.existsByCompanyName(request.getCompanyName())) {
-            throw new RuntimeException("Company Name already exists.");
+            throw new DuplicateResourceException("Company Name already exists.");
         }
 
         Company company = CompanyMapper.toEntity(request);
@@ -61,7 +63,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         Company company = companyRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Company not found."));
+                        new ResourceNotFoundException("Company not found."));
 
         company.setCompanyCode(request.getCompanyCode());
         company.setCompanyName(request.getCompanyName());
@@ -86,7 +88,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         Company company = companyRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Company not found."));
+                        new ResourceNotFoundException("Company not found."));
 
         companyRepository.delete(company);
     }

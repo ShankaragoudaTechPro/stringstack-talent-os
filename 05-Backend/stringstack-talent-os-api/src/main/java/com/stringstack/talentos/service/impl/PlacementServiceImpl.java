@@ -6,6 +6,8 @@ import com.stringstack.talentos.entity.Company;
 import com.stringstack.talentos.entity.Enrollment;
 import com.stringstack.talentos.entity.Placement;
 import com.stringstack.talentos.entity.PlacementDrive;
+import com.stringstack.talentos.exception.DuplicateResourceException;
+import com.stringstack.talentos.exception.ResourceNotFoundException;
 import com.stringstack.talentos.mapper.PlacementMapper;
 import com.stringstack.talentos.repository.CompanyRepository;
 import com.stringstack.talentos.repository.EnrollmentRepository;
@@ -31,17 +33,17 @@ public class PlacementServiceImpl implements PlacementService {
     public PlacementResponse createPlacement(PlacementRequest request) {
 
         if (placementRepository.existsByPlacementCode(request.getPlacementCode())) {
-            throw new RuntimeException("Placement Code already exists.");
+            throw new DuplicateResourceException("Placement Code already exists.");
         }
 
         Enrollment enrollment = enrollmentRepository.findById(request.getEnrollmentId())
-                .orElseThrow(() -> new RuntimeException("Enrollment not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Enrollment not found."));
 
         PlacementDrive drive = placementDriveRepository.findById(request.getPlacementDriveId())
-                .orElseThrow(() -> new RuntimeException("Placement Drive not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Placement Drive not found."));
 
         Company company = companyRepository.findById(request.getCompanyId())
-                .orElseThrow(() -> new RuntimeException("Company not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Company not found."));
 
         Placement placement = PlacementMapper.toEntity(request);
 
@@ -67,7 +69,7 @@ public class PlacementServiceImpl implements PlacementService {
     public PlacementResponse getPlacementById(Long id) {
 
         Placement placement = placementRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Placement not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Placement not found."));
 
         return PlacementMapper.toResponse(placement);
     }
@@ -77,16 +79,16 @@ public class PlacementServiceImpl implements PlacementService {
                                              PlacementRequest request) {
 
         Placement placement = placementRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Placement not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Placement not found."));
 
         Enrollment enrollment = enrollmentRepository.findById(request.getEnrollmentId())
-                .orElseThrow(() -> new RuntimeException("Enrollment not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Enrollment not found."));
 
         PlacementDrive drive = placementDriveRepository.findById(request.getPlacementDriveId())
-                .orElseThrow(() -> new RuntimeException("Placement Drive not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Placement Drive not found."));
 
         Company company = companyRepository.findById(request.getCompanyId())
-                .orElseThrow(() -> new RuntimeException("Company not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Company not found."));
 
         placement.setPlacementCode(request.getPlacementCode());
         placement.setEnrollment(enrollment);
@@ -108,7 +110,7 @@ public class PlacementServiceImpl implements PlacementService {
     public void deletePlacement(Long id) {
 
         Placement placement = placementRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Placement not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Placement not found."));
 
         placementRepository.delete(placement);
     }

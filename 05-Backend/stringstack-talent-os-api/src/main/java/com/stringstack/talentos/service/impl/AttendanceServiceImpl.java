@@ -4,6 +4,8 @@ import com.stringstack.talentos.dto.attendance.AttendanceRequest;
 import com.stringstack.talentos.dto.attendance.AttendanceResponse;
 import com.stringstack.talentos.entity.Attendance;
 import com.stringstack.talentos.entity.Enrollment;
+import com.stringstack.talentos.exception.DuplicateResourceException;
+import com.stringstack.talentos.exception.ResourceNotFoundException;
 import com.stringstack.talentos.mapper.AttendanceMapper;
 import com.stringstack.talentos.repository.AttendanceRepository;
 import com.stringstack.talentos.repository.EnrollmentRepository;
@@ -25,11 +27,11 @@ public class AttendanceServiceImpl implements AttendanceService {
     public AttendanceResponse createAttendance(AttendanceRequest request) {
 
         if (attendanceRepository.existsByAttendanceCode(request.getAttendanceCode())) {
-            throw new RuntimeException("Attendance Code already exists.");
+            throw new DuplicateResourceException("Attendance Code already exists.");
         }
 
         Enrollment enrollment = enrollmentRepository.findById(request.getEnrollmentId())
-                .orElseThrow(() -> new RuntimeException("Enrollment not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Enrollment not found."));
 
         Attendance attendance = AttendanceMapper.toEntity(request);
 
@@ -53,7 +55,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     public AttendanceResponse getAttendanceById(Long id) {
 
         Attendance attendance = attendanceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Attendance not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Attendance not found."));
 
         return AttendanceMapper.toResponse(attendance);
     }
@@ -63,10 +65,10 @@ public class AttendanceServiceImpl implements AttendanceService {
                                                AttendanceRequest request) {
 
         Attendance attendance = attendanceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Attendance not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Attendance not found."));
 
         Enrollment enrollment = enrollmentRepository.findById(request.getEnrollmentId())
-                .orElseThrow(() -> new RuntimeException("Enrollment not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Enrollment not found."));
 
         attendance.setAttendanceCode(request.getAttendanceCode());
         attendance.setAttendanceDate(request.getAttendanceDate());
@@ -84,7 +86,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     public void deleteAttendance(Long id) {
 
         Attendance attendance = attendanceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Attendance not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Attendance not found."));
 
         attendanceRepository.delete(attendance);
     }

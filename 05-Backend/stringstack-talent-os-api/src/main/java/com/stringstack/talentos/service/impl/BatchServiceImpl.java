@@ -5,6 +5,8 @@ import com.stringstack.talentos.dto.batch.BatchResponse;
 import com.stringstack.talentos.entity.Batch;
 import com.stringstack.talentos.entity.Course;
 import com.stringstack.talentos.entity.Trainer;
+import com.stringstack.talentos.exception.DuplicateResourceException;
+import com.stringstack.talentos.exception.ResourceNotFoundException;
 import com.stringstack.talentos.mapper.BatchMapper;
 import com.stringstack.talentos.repository.BatchRepository;
 import com.stringstack.talentos.repository.CourseRepository;
@@ -28,14 +30,14 @@ public class BatchServiceImpl implements BatchService {
     public BatchResponse createBatch(BatchRequest request) {
 
         if (batchRepository.existsByBatchCode(request.getBatchCode())) {
-            throw new RuntimeException("Batch Code already exists.");
+            throw new DuplicateResourceException("Batch Code already exists.");
         }
 
         Course course = courseRepository.findById(request.getCourseId())
-                .orElseThrow(() -> new RuntimeException("Course not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found."));
 
         Trainer trainer = trainerRepository.findById(request.getTrainerId())
-                .orElseThrow(() -> new RuntimeException("Trainer not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Trainer not found."));
 
         Batch batch = BatchMapper.toEntity(request);
 
@@ -60,7 +62,7 @@ public class BatchServiceImpl implements BatchService {
     public BatchResponse getBatchById(Long id) {
 
         Batch batch = batchRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Batch not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Batch not found."));
 
         return BatchMapper.toResponse(batch);
     }
@@ -69,13 +71,13 @@ public class BatchServiceImpl implements BatchService {
     public BatchResponse updateBatch(Long id, BatchRequest request) {
 
         Batch batch = batchRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Batch not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Batch not found."));
 
         Course course = courseRepository.findById(request.getCourseId())
-                .orElseThrow(() -> new RuntimeException("Course not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found."));
 
         Trainer trainer = trainerRepository.findById(request.getTrainerId())
-                .orElseThrow(() -> new RuntimeException("Trainer not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Trainer not found."));
 
         batch.setBatchCode(request.getBatchCode());
         batch.setBatchName(request.getBatchName());
@@ -95,7 +97,7 @@ public class BatchServiceImpl implements BatchService {
     public void deleteBatch(Long id) {
 
         Batch batch = batchRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Batch not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Batch not found."));
 
         batchRepository.delete(batch);
     }

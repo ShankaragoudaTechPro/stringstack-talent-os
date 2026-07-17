@@ -6,6 +6,8 @@ import com.stringstack.talentos.entity.Company;
 import com.stringstack.talentos.entity.Notification;
 import com.stringstack.talentos.entity.Student;
 import com.stringstack.talentos.entity.Trainer;
+import com.stringstack.talentos.exception.DuplicateResourceException;
+import com.stringstack.talentos.exception.ResourceNotFoundException;
 import com.stringstack.talentos.mapper.NotificationMapper;
 import com.stringstack.talentos.repository.CompanyRepository;
 import com.stringstack.talentos.repository.NotificationRepository;
@@ -31,26 +33,26 @@ public class NotificationServiceImpl implements NotificationService {
     public NotificationResponse createNotification(NotificationRequest request) {
 
         if (notificationRepository.existsByNotificationCode(request.getNotificationCode())) {
-            throw new RuntimeException("Notification Code already exists.");
+            throw new DuplicateResourceException("Notification Code already exists.");
         }
 
         Notification notification = NotificationMapper.toEntity(request);
 
         if (request.getStudentId() != null) {
             Student student = studentRepository.findById(request.getStudentId())
-                    .orElseThrow(() -> new RuntimeException("Student not found."));
+                    .orElseThrow(() -> new ResourceNotFoundException("Student not found."));
             notification.setStudent(student);
         }
 
         if (request.getTrainerId() != null) {
             Trainer trainer = trainerRepository.findById(request.getTrainerId())
-                    .orElseThrow(() -> new RuntimeException("Trainer not found."));
+                    .orElseThrow(() -> new ResourceNotFoundException("Trainer not found."));
             notification.setTrainer(trainer);
         }
 
         if (request.getCompanyId() != null) {
             Company company = companyRepository.findById(request.getCompanyId())
-                    .orElseThrow(() -> new RuntimeException("Company not found."));
+                    .orElseThrow(() -> new ResourceNotFoundException("Company not found."));
             notification.setCompany(company);
         }
 
@@ -72,7 +74,7 @@ public class NotificationServiceImpl implements NotificationService {
     public NotificationResponse getNotificationById(Long id) {
 
         Notification notification = notificationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Notification not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Notification not found."));
 
         return NotificationMapper.toResponse(notification);
     }
@@ -81,7 +83,7 @@ public class NotificationServiceImpl implements NotificationService {
     public NotificationResponse updateNotification(Long id, NotificationRequest request) {
 
         Notification notification = notificationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Notification not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Notification not found."));
 
         notification.setNotificationCode(request.getNotificationCode());
         notification.setTitle(request.getTitle());
@@ -98,7 +100,7 @@ public class NotificationServiceImpl implements NotificationService {
         if (request.getStudentId() != null) {
             notification.setStudent(
                     studentRepository.findById(request.getStudentId())
-                            .orElseThrow(() -> new RuntimeException("Student not found."))
+                            .orElseThrow(() -> new ResourceNotFoundException("Student not found."))
             );
         }
 
@@ -112,7 +114,7 @@ public class NotificationServiceImpl implements NotificationService {
         if (request.getCompanyId() != null) {
             notification.setCompany(
                     companyRepository.findById(request.getCompanyId())
-                            .orElseThrow(() -> new RuntimeException("Company not found."))
+                            .orElseThrow(() -> new ResourceNotFoundException("Company not found."))
             );
         }
 
@@ -125,7 +127,7 @@ public class NotificationServiceImpl implements NotificationService {
     public void deleteNotification(Long id) {
 
         Notification notification = notificationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Notification not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Notification not found."));
 
         notificationRepository.delete(notification);
     }

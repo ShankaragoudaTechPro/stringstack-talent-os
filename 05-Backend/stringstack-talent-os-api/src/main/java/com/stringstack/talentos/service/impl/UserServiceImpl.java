@@ -4,6 +4,8 @@ import com.stringstack.talentos.dto.user.UserRequest;
 import com.stringstack.talentos.dto.user.UserResponse;
 import com.stringstack.talentos.entity.Role;
 import com.stringstack.talentos.entity.User;
+import com.stringstack.talentos.exception.DuplicateResourceException;
+import com.stringstack.talentos.exception.ResourceNotFoundException;
 import com.stringstack.talentos.mapper.UserMapper;
 import com.stringstack.talentos.repository.RoleRepository;
 import com.stringstack.talentos.repository.UserRepository;
@@ -27,15 +29,15 @@ public class UserServiceImpl implements UserService {
     public UserResponse createUser(UserRequest request) {
 
         if(userRepository.existsByEmail(request.getEmail())){
-            throw new RuntimeException("Email already exists.");
+            throw new DuplicateResourceException("Email already exists.");
         }
 
         if(userRepository.existsByPhone(request.getPhone())){
-            throw new RuntimeException("Phone already exists.");
+            throw new DuplicateResourceException("Phone already exists.");
         }
 
         Role role = roleRepository.findById(request.getRoleId())
-                .orElseThrow(() -> new RuntimeException("Role not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found."));
 
         User user = User.builder()
                 .firstName(request.getFirstName())
@@ -65,7 +67,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse getUserById(Long id) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
         return UserMapper.toResponse(user);
     }
@@ -74,10 +76,10 @@ public class UserServiceImpl implements UserService {
     public UserResponse updateUser(Long id, UserRequest request) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
         Role role = roleRepository.findById(request.getRoleId())
-                .orElseThrow(() -> new RuntimeException("Role not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found."));
 
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
@@ -96,7 +98,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
         userRepository.delete(user);
     }

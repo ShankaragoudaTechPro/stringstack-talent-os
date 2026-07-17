@@ -3,6 +3,8 @@ package com.stringstack.talentos.service.impl;
 import com.stringstack.talentos.dto.course.CourseRequest;
 import com.stringstack.talentos.dto.course.CourseResponse;
 import com.stringstack.talentos.entity.Course;
+import com.stringstack.talentos.exception.DuplicateResourceException;
+import com.stringstack.talentos.exception.ResourceNotFoundException;
 import com.stringstack.talentos.mapper.CourseMapper;
 import com.stringstack.talentos.repository.CourseRepository;
 import com.stringstack.talentos.service.CourseService;
@@ -22,11 +24,11 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse createCourse(CourseRequest request) {
 
         if (courseRepository.existsByCourseCode(request.getCourseCode())) {
-            throw new RuntimeException("Course Code already exists.");
+            throw new DuplicateResourceException("Course Code already exists.");
         }
 
         if (courseRepository.existsByCourseName(request.getCourseName())) {
-            throw new RuntimeException("Course Name already exists.");
+            throw new DuplicateResourceException("Course Name already exists.");
         }
 
         Course course = CourseMapper.toEntity(request);
@@ -49,7 +51,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse getCourseById(Long id) {
 
         Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Course not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found."));
 
         return CourseMapper.toResponse(course);
     }
@@ -58,7 +60,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse updateCourse(Long id, CourseRequest request) {
 
         Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Course not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found."));
 
         course.setCourseCode(request.getCourseCode());
         course.setCourseName(request.getCourseName());
@@ -77,7 +79,7 @@ public class CourseServiceImpl implements CourseService {
     public void deleteCourse(Long id) {
 
         Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Course not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found."));
 
         courseRepository.delete(course);
     }

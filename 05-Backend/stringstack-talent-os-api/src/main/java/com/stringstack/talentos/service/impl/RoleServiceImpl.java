@@ -2,6 +2,7 @@ package com.stringstack.talentos.service.impl;
 import com.stringstack.talentos.dto.RoleRequest;
 import com.stringstack.talentos.dto.RoleResponse;
 import com.stringstack.talentos.entity.Role;
+import com.stringstack.talentos.exception.ResourceNotFoundException;
 import com.stringstack.talentos.mapper.RoleMapper;
 import com.stringstack.talentos.repository.RoleRepository;
 import com.stringstack.talentos.service.RoleService;
@@ -21,7 +22,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleResponse createRole(RoleRequest request) {
 
         if (roleRepository.existsByRoleName(request.getRoleName())) {
-            throw new RuntimeException("Role already exists.");
+            throw new ResourceNotFoundException("Role already exists.");
         }
 
         Role role = RoleMapper.toEntity(request);
@@ -44,7 +45,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleResponse getRoleById(Long id) {
 
         Role role = roleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role not found."));
+                .orElseThrow(() -> new ResourceNotFoundException ("Role not found."));
 
         return RoleMapper.toResponse(role);
     }
@@ -53,7 +54,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleResponse updateRole(Long id, RoleRequest request) {
 
         Role role = roleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found."));
 
         role.setRoleName(request.getRoleName());
         role.setDescription(request.getDescription());
@@ -68,7 +69,7 @@ public class RoleServiceImpl implements RoleService {
     public void deleteRole(Long id) {
 
         Role role = roleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found."));
 
         roleRepository.delete(role);
     }

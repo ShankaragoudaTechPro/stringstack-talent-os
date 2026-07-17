@@ -4,6 +4,8 @@ import com.stringstack.talentos.dto.student.StudentRequest;
 import com.stringstack.talentos.dto.student.StudentResponse;
 import com.stringstack.talentos.entity.Student;
 import com.stringstack.talentos.entity.User;
+import com.stringstack.talentos.exception.DuplicateResourceException;
+import com.stringstack.talentos.exception.ResourceNotFoundException;
 import com.stringstack.talentos.mapper.StudentMapper;
 import com.stringstack.talentos.repository.StudentRepository;
 import com.stringstack.talentos.repository.UserRepository;
@@ -25,19 +27,19 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponse createStudent(StudentRequest request) {
 
         if (studentRepository.existsByStudentCode(request.getStudentCode())) {
-            throw new RuntimeException("Student Code already exists.");
+            throw new DuplicateResourceException("Student Code already exists.");
         }
 
         if (studentRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists.");
+            throw new DuplicateResourceException("Email already exists.");
         }
 
         if (studentRepository.existsByPhone(request.getPhone())) {
-            throw new RuntimeException("Phone already exists.");
+            throw new DuplicateResourceException("Phone already exists.");
         }
 
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
         Student student = StudentMapper.toEntity(request);
 
@@ -61,7 +63,7 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponse getStudentById(Long id) {
 
         Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found."));
 
         return StudentMapper.toResponse(student);
     }
@@ -70,10 +72,10 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponse updateStudent(Long id, StudentRequest request) {
 
         Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found."));
 
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
 
         student.setStudentCode(request.getStudentCode());
         student.setFirstName(request.getFirstName());
@@ -99,7 +101,7 @@ public class StudentServiceImpl implements StudentService {
     public void deleteStudent(Long id) {
 
         Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found."));
 
         studentRepository.delete(student);
     }

@@ -5,6 +5,8 @@ import com.stringstack.talentos.dto.placementDrive.PlacementDriveRequest;
 import com.stringstack.talentos.dto.placementDrive.PlacementDriveResponse;
 import com.stringstack.talentos.entity.Company;
 import com.stringstack.talentos.entity.PlacementDrive;
+import com.stringstack.talentos.exception.DuplicateResourceException;
+import com.stringstack.talentos.exception.ResourceNotFoundException;
 import com.stringstack.talentos.mapper.PlacementDriveMapper;
 import com.stringstack.talentos.repository.CompanyRepository;
 import com.stringstack.talentos.repository.PlacementDriveRepository;
@@ -27,12 +29,12 @@ public class PlacementDriveServiceImpl implements PlacementDriveService {
             PlacementDriveRequest request) {
 
         if (placementDriveRepository.existsByDriveCode(request.getDriveCode())) {
-            throw new RuntimeException("Drive Code already exists.");
+            throw new DuplicateResourceException("Drive Code already exists.");
         }
 
         Company company = companyRepository.findById(request.getCompanyId())
                 .orElseThrow(() ->
-                        new RuntimeException("Company not found."));
+                        new ResourceNotFoundException("Company not found."));
 
         PlacementDrive drive = PlacementDriveMapper.toEntity(request);
 
@@ -58,7 +60,7 @@ public class PlacementDriveServiceImpl implements PlacementDriveService {
 
         PlacementDrive drive = placementDriveRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Placement Drive not found."));
+                        new ResourceNotFoundException("Placement Drive not found."));
 
         return PlacementDriveMapper.toResponse(drive);
     }
@@ -70,11 +72,11 @@ public class PlacementDriveServiceImpl implements PlacementDriveService {
 
         PlacementDrive drive = placementDriveRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Placement Drive not found."));
+                        new ResourceNotFoundException("Placement Drive not found."));
 
         Company company = companyRepository.findById(request.getCompanyId())
                 .orElseThrow(() ->
-                        new RuntimeException("Company not found."));
+                        new ResourceNotFoundException("Company not found."));
 
         drive.setDriveCode(request.getDriveCode());
         drive.setDriveTitle(request.getDriveTitle());
