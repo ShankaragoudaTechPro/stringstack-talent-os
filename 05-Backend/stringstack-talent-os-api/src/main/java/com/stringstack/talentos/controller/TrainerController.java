@@ -2,6 +2,7 @@ package com.stringstack.talentos.controller;
 
 import com.stringstack.talentos.dto.trainer.TrainerRequest;
 import com.stringstack.talentos.dto.trainer.TrainerResponse;
+import com.stringstack.talentos.exception.ApiResponse;
 import com.stringstack.talentos.service.TrainerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -19,43 +21,83 @@ public class TrainerController {
     private final TrainerService trainerService;
 
     @PostMapping
-    public ResponseEntity<TrainerResponse> createTrainer(
+    public ResponseEntity<ApiResponse<TrainerResponse>> createTrainer(
             @Valid @RequestBody TrainerRequest request) {
 
-        return new ResponseEntity<>(
-                trainerService.createTrainer(request),
-                HttpStatus.CREATED);
+        TrainerResponse response = trainerService.createTrainer(request);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        ApiResponse.<TrainerResponse>builder()
+                                .success(true)
+                                .message("Trainer created successfully")
+                                .data(response)
+                                .timestamp(LocalDateTime.now())
+                                .build()
+                );
     }
 
     @GetMapping
-    public ResponseEntity<List<TrainerResponse>> getAllTrainers() {
+    public ResponseEntity<ApiResponse<List<TrainerResponse>>> getAllTrainers() {
 
-        return ResponseEntity.ok(trainerService.getAllTrainers());
+        List<TrainerResponse> response = trainerService.getAllTrainers();
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<TrainerResponse>>builder()
+                        .success(true)
+                        .message("Trainers fetched successfully")
+                        .data(response)
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TrainerResponse> getTrainerById(
+    public ResponseEntity<ApiResponse<TrainerResponse>> getTrainerById(
             @PathVariable Long id) {
 
-        return ResponseEntity.ok(trainerService.getTrainerById(id));
+        TrainerResponse response = trainerService.getTrainerById(id);
+
+        return ResponseEntity.ok(
+                ApiResponse.<TrainerResponse>builder()
+                        .success(true)
+                        .message("Trainer fetched successfully")
+                        .data(response)
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TrainerResponse> updateTrainer(
+    public ResponseEntity<ApiResponse<TrainerResponse>> updateTrainer(
             @PathVariable Long id,
             @Valid @RequestBody TrainerRequest request) {
 
+        TrainerResponse response = trainerService.updateTrainer(id, request);
+
         return ResponseEntity.ok(
-                trainerService.updateTrainer(id, request));
+                ApiResponse.<TrainerResponse>builder()
+                        .success(true)
+                        .message("Trainer updated successfully")
+                        .data(response)
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTrainer(
+    public ResponseEntity<ApiResponse<Object>> deleteTrainer(
             @PathVariable Long id) {
 
         trainerService.deleteTrainer(id);
 
-        return ResponseEntity.ok("Trainer deleted successfully.");
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message("Trainer deleted successfully")
+                        .data(null)
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
     }
-
 }

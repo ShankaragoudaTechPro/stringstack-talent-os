@@ -1,10 +1,15 @@
 package com.stringstack.talentos.dto.notification;
 
+import com.stringstack.talentos.constants.NotificationPriority;
+import com.stringstack.talentos.constants.NotificationSource;
+import com.stringstack.talentos.constants.NotificationType;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -32,12 +37,25 @@ public class NotificationRequest {
     private Long companyId;
 
     @NotNull
-    private LocalDate sentAt;
+    private NotificationType type;
+
+    @NotNull
+    private NotificationPriority priority;
+
+    @NotNull
+    private NotificationSource source;
+
+    private Long sourceId;
+
+    private LocalDateTime sentAt;
+
+    private LocalDateTime scheduledAt;
+
+    private LocalDateTime expiresAt;
 
     @NotBlank
     private String status;
 
     @NotNull
     private Boolean active;
-
 }

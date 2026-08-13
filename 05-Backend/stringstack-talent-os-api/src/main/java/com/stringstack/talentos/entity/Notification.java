@@ -1,11 +1,14 @@
 package com.stringstack.talentos.entity;
 
+import com.stringstack.talentos.constants.NotificationPriority;
+import com.stringstack.talentos.constants.NotificationSource;
+import com.stringstack.talentos.constants.NotificationType;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,17 +24,42 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "notification_code", nullable = false, unique = true)
+    // =====================================================
+    // NOTIFICATION CODE
+    // =====================================================
+
+    @Column(
+            name = "notification_code",
+            nullable = false,
+            unique = true,
+            length = 100
+    )
     private String notificationCode;
 
-    @Column(nullable = false)
+    // =====================================================
+    // CONTENT
+    // =====================================================
+
+    @Column(nullable = false, length = 200)
     private String title;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(nullable = false, length = 1000)
     private String message;
 
-    @Column(name = "recipient_type", nullable = false)
+    // =====================================================
+    // RECIPIENT TYPE
+    // =====================================================
+
+    @Column(
+            name = "recipient_type",
+            nullable = false,
+            length = 30
+    )
     private String recipientType;
+
+    // =====================================================
+    // RECIPIENTS
+    // =====================================================
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
@@ -45,21 +73,97 @@ public class Notification {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @Column(name = "sent_at")
-    private LocalDate sentAt;
+    // =====================================================
+    // TYPE
+    // =====================================================
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 50)
+    private NotificationType type;
+
+    // =====================================================
+    // PRIORITY
+    // =====================================================
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private NotificationPriority priority;
+
+    // =====================================================
+    // SOURCE
+    // =====================================================
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private NotificationSource source;
+
+    @Column(name = "source_id")
+    private Long sourceId;
+
+    // =====================================================
+    // STATUS
+    // =====================================================
+
+    @Column(name = "is_read", nullable = false)
+    private Boolean read;
+    
+
+    @Column(nullable = false, length = 30)
     private String status;
 
     @Column(nullable = false)
     private Boolean active;
 
+    // =====================================================
+    // DATES
+    // =====================================================
+
     @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
+    @Column(
+            name = "created_at",
+            nullable = false,
+            updatable = false
+    )
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "sent_at")
+    private LocalDateTime sentAt;
+
+    @Column(name = "scheduled_at")
+    private LocalDateTime scheduledAt;
+
+    @Column(name = "expires_at")
+    private LocalDateTime expiresAt;
+
+    // =====================================================
+    // PRE PERSIST
+    // =====================================================
+
+    @PrePersist
+    protected void onCreate() {
+
+        if (read == null) {
+            read = false;
+        }
+
+        if (priority == null) {
+            priority = NotificationPriority.MEDIUM;
+        }
+
+        if (active == null) {
+            active = true;
+        }
+
+        if (status == null) {
+            status = "SENT";
+        }
+
+        if (sentAt == null) {
+            sentAt = LocalDateTime.now();
+        }
+    }
 }

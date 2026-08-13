@@ -1,5 +1,6 @@
 package com.stringstack.talentos.service;
 
+import com.stringstack.talentos.dto.common.PageResponse;
 import com.stringstack.talentos.dto.student.StudentRequest;
 import com.stringstack.talentos.dto.student.StudentResponse;
 
@@ -16,4 +17,8 @@ public interface StudentService {
     StudentResponse updateStudent(Long id, StudentRequest request);
 
     void deleteStudent(Long id);
+
+    PageResponse<StudentResponse> getAllStudents(int page, int size);
+
+
 }

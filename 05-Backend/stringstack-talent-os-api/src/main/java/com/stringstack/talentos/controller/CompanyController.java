@@ -2,6 +2,7 @@ package com.stringstack.talentos.controller;
 
 import com.stringstack.talentos.dto.company.CompanyRequest;
 import com.stringstack.talentos.dto.company.CompanyResponse;
+import com.stringstack.talentos.exception.ApiResponse;
 import com.stringstack.talentos.service.CompanyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -18,43 +20,89 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
+    // Create Company
     @PostMapping
-    public ResponseEntity<CompanyResponse> createCompany(
+    public ResponseEntity<ApiResponse<CompanyResponse>> createCompany(
             @Valid @RequestBody CompanyRequest request) {
 
-        return new ResponseEntity<>(
-                companyService.createCompany(request),
-                HttpStatus.CREATED);
+        CompanyResponse response = companyService.createCompany(request);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        ApiResponse.<CompanyResponse>builder()
+                                .success(true)
+                                .message("Company created successfully")
+                                .data(response)
+                                .timestamp(LocalDateTime.now())
+                                .build()
+                );
     }
 
+    // Get All Companies
     @GetMapping
-    public ResponseEntity<List<CompanyResponse>> getAllCompanies() {
+    public ResponseEntity<ApiResponse<List<CompanyResponse>>> getAllCompanies() {
 
-        return ResponseEntity.ok(companyService.getAllCompanies());
+        List<CompanyResponse> response = companyService.getAllCompanies();
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<CompanyResponse>>builder()
+                        .success(true)
+                        .message("Companies fetched successfully")
+                        .data(response)
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
     }
 
+    // Get Company By Id
     @GetMapping("/{id}")
-    public ResponseEntity<CompanyResponse> getCompanyById(
+    public ResponseEntity<ApiResponse<CompanyResponse>> getCompanyById(
             @PathVariable Long id) {
 
-        return ResponseEntity.ok(companyService.getCompanyById(id));
+        CompanyResponse response = companyService.getCompanyById(id);
+
+        return ResponseEntity.ok(
+                ApiResponse.<CompanyResponse>builder()
+                        .success(true)
+                        .message("Company fetched successfully")
+                        .data(response)
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
     }
 
+    // Update Company
     @PutMapping("/{id}")
-    public ResponseEntity<CompanyResponse> updateCompany(
+    public ResponseEntity<ApiResponse<CompanyResponse>> updateCompany(
             @PathVariable Long id,
             @Valid @RequestBody CompanyRequest request) {
 
+        CompanyResponse response = companyService.updateCompany(id, request);
+
         return ResponseEntity.ok(
-                companyService.updateCompany(id, request));
+                ApiResponse.<CompanyResponse>builder()
+                        .success(true)
+                        .message("Company updated successfully")
+                        .data(response)
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
     }
 
+    // Delete Company
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCompany(
+    public ResponseEntity<ApiResponse<Object>> deleteCompany(
             @PathVariable Long id) {
 
         companyService.deleteCompany(id);
 
-        return ResponseEntity.ok("Company deleted successfully.");
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .success(true)
+                        .message("Company deleted successfully")
+                        .data(null)
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
     }
 }

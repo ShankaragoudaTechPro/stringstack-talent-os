@@ -16,5 +16,4 @@ public interface ResumeService {
     ResumeResponse updateResume(Long id, ResumeRequest request);
 
     void deleteResume(Long id);
-
 }

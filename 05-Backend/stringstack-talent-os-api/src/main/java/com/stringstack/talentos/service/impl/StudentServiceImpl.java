@@ -1,5 +1,6 @@
 package com.stringstack.talentos.service.impl;
 
+import com.stringstack.talentos.dto.common.PageResponse;
 import com.stringstack.talentos.dto.student.StudentRequest;
 import com.stringstack.talentos.dto.student.StudentResponse;
 import com.stringstack.talentos.entity.Student;
@@ -11,6 +12,9 @@ import com.stringstack.talentos.repository.StudentRepository;
 import com.stringstack.talentos.repository.UserRepository;
 import com.stringstack.talentos.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +61,28 @@ public class StudentServiceImpl implements StudentService {
                 .stream()
                 .map(StudentMapper::toResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public PageResponse<StudentResponse> getAllStudents(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Student> studentPage = studentRepository.findAll(pageable);
+
+        List<StudentResponse> studentResponses = studentPage.getContent()
+                .stream()
+                .map(StudentMapper::toResponse)
+                .collect(Collectors.toList());
+
+        return PageResponse.<StudentResponse>builder()
+                .content(studentResponses)
+                .page(studentPage.getNumber())
+                .size(studentPage.getSize())
+                .totalElements(studentPage.getTotalElements())
+                .totalPages(studentPage.getTotalPages())
+                .last(studentPage.isLast())
+                .build();
     }
 
     @Override
